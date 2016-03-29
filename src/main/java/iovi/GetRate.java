@@ -20,14 +20,24 @@ import java.util.GregorianCalendar;
 @WebService
 public class GetRate {
     @WebMethod
-    public WebappResponse GetRateByCurrencyCode(String code) {
+    public WebappResponse GetRateByCountry(String country) {
         WebappResponse response=new WebappResponse();
         Logger logger = new Logger("LOG.TXT");
         try {
             DailyInfoSoap soap = new DailyInfo().getDailyInfoSoap();
             XMLGregorianCalendar date = getTodayDate();
 
-            logger.PutIntoLog(date.toString(),code+"\n");
+            logger.PutIntoLog(date.toString(),country+"\n");
+            DBController db=new DBController();
+            String code=db.getCountryCurrencyCode(country);
+            logger.PutIntoLog(date.toString(),code);
+            if (code==null){
+                response.setErrorText("No such country");
+                try {
+                    logger.PutIntoLog(date.toString(),response);
+                } catch (Exception e1){}
+                return response;
+            }
 
             GetCursOnDateResult result = soap.getCursOnDate(date);
             GetCursOnDateResultParser.Rate rate = GetCursOnDateResultParser.getRateByVCode(code, result);
