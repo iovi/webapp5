@@ -182,6 +182,7 @@ ru\cbr\web\DragMetDynamicResponse$DragMetDynamicResult.class
 ru\cbr\web\MKRResponse.class
 ru\cbr\web\ROISfixResponse$ROISfixResult.class
 ru\cbr\web\EnumValutesXML.class
+iovi\DBController.class
 ru\cbr\web\DragMetDynamicResponse.class
 ru\cbr\web\GetLatestDateResponse.class
 ru\cbr\web\SwapMonthTotal.class

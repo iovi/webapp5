@@ -29,34 +29,24 @@ public class GetRate {
 
             logger.PutIntoLog(date.toString(),country+"\n");
             DBController db=new DBController();
-            String code=db.getCountryCurrencyCode(country);
-            logger.PutIntoLog(date.toString(),code);
-            if (code==null){
-                response.setErrorText("No such country");
-                try {
-                    logger.PutIntoLog(date.toString(),response);
-                } catch (Exception e1){}
-                return response;
-            }
+            String code=db.getChCodeByCountry(country);
+            db.EndWorkingWithDB();
 
             GetCursOnDateResult result = soap.getCursOnDate(date);
-            GetCursOnDateResultParser.Rate rate = GetCursOnDateResultParser.getRateByVCode(code, result);
+            GetCursOnDateResultParser.Rate rate = GetCursOnDateResultParser.getRateByChCode(code, result);
 
             response.setCurrency(rate.chCode);
             response.setRate(rate.curs.toString());
             response.setStatus(1);
-            try{
-                logger.PutIntoLog(date.toString(),response);
-            } catch (JAXBException e ){
-                logger.PutIntoLog(date.toString(),e.getMessage());
-            }
+            logger.PutIntoLog(date.toString(),response);
             return response;
         }catch (Exception e){
             response.setErrorText(e.getMessage());
             try {
                 XMLGregorianCalendar date = getTodayDate();
                 logger.PutIntoLog(date.toString(),response);
-            } catch (Exception e1){}
+            } catch (Exception e1){
+                response.setErrorText(e1.getMessage());}
             return response;
         }
     }

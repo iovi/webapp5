@@ -37,12 +37,12 @@ public class GetCursOnDateResultParser {
         }
     }
 
-    public static Rate getRateByVCode(String valuteCode, GetCursOnDateResult result) throws Exception{
+    public static Rate getRateByChCode(String valuteCode, GetCursOnDateResult result) throws Exception{
 
         Rate answer = new Rate();
 
         ElementNSImpl e = (ElementNSImpl) result.getAny();
-        NodeList chCodeList =   e.getElementsByTagName("Vcode");
+        NodeList chCodeList =   e.getElementsByTagName("VchCode");
         int length = chCodeList.getLength();
 
         boolean isFound = false;
@@ -85,6 +85,5 @@ public class GetCursOnDateResultParser {
         }
 
         return answer;
-
     }
 }
