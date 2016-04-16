@@ -37,7 +37,7 @@ public class GetCursOnDateResultParser {
         }
     }
 
-    public static Rate getRateByChCode(String valuteCode, GetCursOnDateResult result) throws Exception{
+    public static Rate getRateByChCode(String valuteCode, GetCursOnDateResult result) {
 
         Rate answer = new Rate();
 

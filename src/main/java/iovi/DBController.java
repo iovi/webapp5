@@ -41,13 +41,35 @@ public class DBController {
             connection.close();
         } catch (SQLException se) { }
     }
-    public String getChCodeByCountry(String country)throws Exception {
-
-        String query="select currencychcode from countries where countryname='"+country+"';";
-        ResultSet result=connection.createStatement().executeQuery(query);
-        result.next();
-        String code=result.getString(1);
-        result.close();
+    public String getChCodeByCountry(String country) throws SQLException {
+         String query="select currencychcode from countries where countryname='"+country+"';";
+         ResultSet result=connection.createStatement().executeQuery(query);
+         result.next();
+         String code=result.getString(1);
+         result.close();
         return code;
+    }
+    public int StartAttempt() throws SQLException{
+        String query="insert into attempts (status) values(null);";
+        PreparedStatement statement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+        statement.executeUpdate(query);
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        generatedKeys.next();
+        int id=(generatedKeys.getInt(1));
+        return id;
+    }
+    public void EndAttempt(int id, int status) throws SQLException{
+        String query = "update attempts set status=" + String.valueOf(status) + " where id =" + String.valueOf(id);
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(query);
+    }
+    public void PutIntoLog(int id, String time, String from, String to, String text ) throws SQLException{
+        String query="insert into querylog values ("+
+                String.valueOf(id) +", " +
+                "STR_TO_DATE('"+ time +"', '%d.%m.%Y %T'), '" +
+                from +"', '" +
+                to +"', '" +
+                text +"');";
+        connection.createStatement().executeUpdate(query);
     }
 }

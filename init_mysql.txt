@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS webapp5;
 USE webapp5;
+DROP USER javauser;	
 CREATE USER IF NOT EXISTS javauser identified by 'javapass';
 GRANT ALL PRIVILEGES ON webapp5.* TO javauser;
 DROP TABLE IF EXISTS countries;
@@ -256,5 +257,20 @@ insert into countries (countryname, capital, currencyname,currencychcode) values
 insert into countries (countryname, capital, currencyname,currencychcode) values (	    'Yemen'	,	    'San''a'	,	    'Yemeni Rial'	,	    'YER'	);
 insert into countries (countryname, capital, currencyname,currencychcode) values (	    'Zambia'	,	    'Lusaka'	,	    'Zambian Kwacha'	,	    'ZMW'	);
 insert into countries (countryname, capital, currencyname,currencychcode) values (	    'Zimbabwe'	,	    'Harare'	,	    'Zimbabwe Dollar'	,	    'ZWD'	);
+
+DROP TABLE IF EXISTS attempts;
+CREATE TABLE attempts (
+	id INT(10) NOT NULL AUTO_INCREMENT,
+	status INT,
+	PRIMARY KEY(`id`)
+);
+DROP TABLE IF EXISTS querylog;
+CREATE TABLE querylog (
+	`attemptid` INT(10) NOT NULL,
+	`time` DATETIME NOT NULL,
+	`from` VARCHAR(50),
+	`to` VARCHAR(50),
+	`text` VARCHAR(20000)
+);
 
 

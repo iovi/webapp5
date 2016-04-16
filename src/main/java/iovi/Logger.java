@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 import java.io.*;
 import java.nio.file.Files;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Aspenson on 27.03.2016.
@@ -24,12 +27,13 @@ public class Logger {
             } catch(IOException e){}
 
     }
+    public Logger(){};
     public static String PrepareXML(Object xml) throws JAXBException{
         JAXBContext context = JAXBContext.newInstance(xml.getClass());
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         StringWriter sw = new StringWriter();
-        marshaller.marshal(new JAXBElement<Object>(new QName("uri", "local"),Object.class, xml), sw);
+        marshaller.marshal(new JAXBElement(new QName("uri", "local"),xml.getClass(), xml), sw);
         return sw.toString();
 
     }
@@ -46,4 +50,19 @@ public class Logger {
         fw.append(PrepareXML(xml));
         fw.close();
     }
+    public void PutQueryIntoLog(int id, String from, String to, String query ) throws SQLException {
+        SimpleDateFormat MySQLFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        DBController c = new DBController();
+        c.PutIntoLog(id, MySQLFormat.format(new Date()), from, to, query);
+        c.EndWorkingWithDB();
+
+    }
+    public void PutQueryIntoLog(int id, String from, String to, Object query ) throws JAXBException, SQLException {
+        SimpleDateFormat MySQLFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        DBController c = new DBController();
+        c.PutIntoLog(id, MySQLFormat.format(new Date()), from, to, PrepareXML(query));
+        c.EndWorkingWithDB();
+
+    }
+
 }
