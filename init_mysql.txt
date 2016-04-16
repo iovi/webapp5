@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS webapp5;
 USE webapp5;
+CREATE USER IF NOT EXISTS javauser identified by 'javapass';
+GRANT ALL PRIVILEGES ON webapp5.* TO javauser;
 DROP TABLE IF EXISTS countries;
 CREATE TABLE countries (
 	id INT(4) NOT NULL AUTO_INCREMENT,

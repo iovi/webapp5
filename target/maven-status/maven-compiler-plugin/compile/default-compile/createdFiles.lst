@@ -84,8 +84,8 @@ ru\cbr\web\SwapDayTotalXMLResponse$SwapDayTotalXMLResult.class
 ru\cbr\web\GetReutersCursDynamicResponse$GetReutersCursDynamicResult.class
 ru\cbr\web\XVolResponse$XVolResult.class
 ru\cbr\web\GetLatestReutersDateTime.class
-ru\cbr\web\GetCursDynamicXMLResponse.class
 ru\cbr\web\SaldoXMLResponse$SaldoXMLResult.class
+ru\cbr\web\GetCursDynamicXMLResponse.class
 ru\cbr\web\SwapMonthTotalResponse.class
 ru\cbr\web\GetLatestDateTime.class
 ru\cbr\web\NewsInfoXMLResponse$NewsInfoXMLResult.class
