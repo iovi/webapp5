@@ -1,5 +1,7 @@
 package iovi;
 
+import ru.gismeteo.ws.HHForecast;
+
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,10 @@ import java.util.List;
 @XmlType(name = "WebappResponse")
 public class WebappResponse {
 
+    @XmlElement(name = "Status")
+    protected int status;
+    @XmlElement(name = "ErrorText")
+    protected String errorText;
     @XmlElement(name = "Courses")
     protected Courses courses;
     @XmlElement(name = "Weather")
@@ -19,19 +25,18 @@ public class WebappResponse {
     }
     public List<Object> getContent() {
         List<Object> all=new ArrayList<Object>();
-        all.add(courses.status);
-        all.add(courses.errorText);
+        all.add(status);
+        all.add(errorText);
         all.add(courses.rate);
+        all.add(courses.currency);
+        all.add(weather.city);
+        all.add(weather.forecast);
         return all;
     }
 
-    public void setStatus(int status) {
-        courses.status=status;
-    }
+    public void setStatus(int status) { this.status=status; }
 
-    public void setErrorText(String text) {
-        courses.errorText=text;
-    }
+    public void setErrorText(String text) { this.errorText=text; }
 
     public void setRate(String rate) {
         courses.rate = rate;
@@ -40,4 +45,8 @@ public class WebappResponse {
     public void setCurrency(String currency) {
         courses.currency = currency;
     }
+
+    public void setCity (String city) {weather.city=city; }
+
+    public void setForecast(HHForecast forecast) {weather.forecast=forecast; }
 }

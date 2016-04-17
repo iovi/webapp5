@@ -5,10 +5,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 import java.io.*;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,14 +48,14 @@ public class Logger {
         fw.append(PrepareXML(xml));
         fw.close();
     }
-    public void PutQueryIntoLog(int id, String from, String to, String query ) throws SQLException {
+    public void PutIntoDB(int id, String from, String to, String query ) throws SQLException {
         SimpleDateFormat MySQLFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         DBController c = new DBController();
         c.PutIntoLog(id, MySQLFormat.format(new Date()), from, to, query);
         c.EndWorkingWithDB();
 
     }
-    public void PutQueryIntoLog(int id, String from, String to, Object query ) throws JAXBException, SQLException {
+    public void PutIntoDB(int id, String from, String to, Object query ) throws JAXBException, SQLException {
         SimpleDateFormat MySQLFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         DBController c = new DBController();
         c.PutIntoLog(id, MySQLFormat.format(new Date()), from, to, PrepareXML(query));

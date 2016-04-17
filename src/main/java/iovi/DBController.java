@@ -49,6 +49,14 @@ public class DBController {
          result.close();
         return code;
     }
+    public String getCapital(String country) throws SQLException {
+        String query="select capital from countries where countryname='"+country+"';";
+        ResultSet result=connection.createStatement().executeQuery(query);
+        result.next();
+        String code=result.getString(1);
+        result.close();
+        return code;
+    }
     public int StartAttempt() throws SQLException{
         String query="insert into attempts (status) values(null);";
         PreparedStatement statement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
